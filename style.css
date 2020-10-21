@@ -1,0 +1,127 @@
+#title{
+	font-family: cursive;
+	margin-top: 10px;
+	color: wheat;
+	justify-content: center;
+	text-align: center;
+}
+
+fieldset{
+	border-width: 10px;
+	border-radius: 10px;
+	border-color: thistle;
+	
+}
+#dataField {
+	height: 380px;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.hidden {
+	display: none;
+}
+
+label{
+	color: white;
+}
+canvas {
+	width: 100% !important;
+	height: auto !important;
+}
+
+.slidecontainer {
+	width: 90%;
+}
+
+.slider {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 25px;
+	background: #b8b7b7;
+	outline: none;
+	opacity: 0.65;
+	-webkit-transition: 0.2s;
+	transition: opacity 0.2s;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+}
+
+.slider:hover {
+	opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 25px;
+	height: 25px;
+	background: #000000;
+	cursor: pointer;
+	border-radius: 20px;
+}
+
+.slider::-moz-range-thumb {
+	width: 25px;
+	height: 25px;
+	background: #0d7de6;
+	cursor: pointer;
+}
+
+  a {
+	text-decoration: none;
+	color: #fff;
+  }
+  .rainbow-button {
+	margin-right:10px !important;
+	margin-left: 10px !important;
+	width: 100%;
+	height: 40px;
+	background-image: linear-gradient(
+	  90deg,
+	  #00c0ff 0%,
+	  #ffcf00 49%,
+	  #fc4f4f 80%,
+	  #00c0ff 100%
+	);
+	border-radius: 10px;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	text-transform: uppercase;
+	font-size: 20px;
+	font-weight: bold;
+  }
+  .rainbow-button:after {
+	margin-right:10px !important;
+	margin-left: 10px !important;
+	content: attr(alt);
+	width: 100%;
+	height: 40px;
+	color: #000000; 
+	border-radius: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  .rainbow-button:hover {
+	animation: slidebg 2s linear infinite;
+  }
+  
+  @keyframes slidebg {
+	to {
+	  background-position: 20vw;
+	}
+  }
+  
+  html, body{
+	background: linear-gradient(to bottom, #7927b2, #fb3182);
+  }
+
+  @media only screen and (max-width: 600px){
+	  #b2{
+		  margin-top: 7px;
+	  }
+  }
