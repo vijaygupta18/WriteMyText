@@ -1,4 +1,4 @@
-let textData = `Your Text will Look like this © Made by Vijay`;
+let textData = `Your Text will Look like this  Made by Vijay`;
 let img, myFont;
 let fonts = ['F3', 'F2', 'F1'];
 let change = 1;
