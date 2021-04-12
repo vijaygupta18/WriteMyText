@@ -1,5 +1,7 @@
-// to prevent the hack extension on file irrelevant php
+
 <?php
+
+// i used the php extension to run the static page on herko// used irrelevant php just to avoid the hack extension
 
 $siteOwnersEmail = 'vijayrauniyar1818@gmail.com';
 
