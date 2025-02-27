@@ -7,7 +7,7 @@ Fonts Credit: Open source.
 
 ## How to use?
 
-- Visit the site by [Clicking Here](https://writemytext.herokuapp.com/)
+- Visit the site by [Clicking Here](https://vijaygupta18.github.io/WriteMyText/)
 - Paste Your Text into the given box.
 - Adjust your Text and Page format.
 - Download Your page by Clicking the Download Button.
