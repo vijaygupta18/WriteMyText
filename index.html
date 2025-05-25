@@ -113,58 +113,54 @@ if($_POST) {
 </head>
 
 <body>
-	<div class="row" style="max-width: 99vw;">
-		<div class="column">
+	<div class="row" style="max-width: 99vw; padding: 20px;">
+		<div class="column" style="padding: 20px; background-color: rgba(255,255,255,0.1); border-radius: 10px;">
 			<section class="container" id="examples">
-				<h3 id="title"><u>Enter Your Text Here:</u></h3>
+				<h3 id="title"><u>Write My Text</u></h3>
+				<p style="text-align: center; color: white; margin-bottom: 20px;">Enter your text below and customize its appearance.</p>
 				<form onsubmit="return false">
 					<fieldset>
-						<textarea placeholder="Your text Here" id="dataField"
-							onkeyup="textChanged(this.value)"></textarea>
+						<textarea placeholder="Your text here..." id="dataField" onkeyup="textChanged(this.value)" style="background-color: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3);"></textarea>
 					</fieldset>
 				
-					<div class="row">
-
+					<div class="row" style="margin-top: 20px; justify-content: center;">
+						<div class="column column-40" style="text-align: center;">
 							<a href="#" class="rainbow-button" id="b1" onclick="incrementor()" alt="Change Handwriting"></a>
-							<a href="#" class="rainbow-button" id="b2" onclick="save(str(pageNum++))" alt="Download Your Page"></a>
-						
-
-					
+						</div>
+						<div class="column column-40" style="text-align: center;">
+							<a href="#" class="rainbow-button" id="b2" onclick="save(str(pageNum++))" alt="Download Page"></a>
+						</div>
 					</div>
 					<br>
-					<div class="row">
+					<h5 style="color: white; text-align: center; margin-top: 30px;">Customize Layout</h5>
+					<div class="row" style="margin-top: 10px;">
 						<div class="column">
-							<label>Margin X-axix</label>
-							<input type="range" min="1" max="200" value="20" oninput="xaxis=float(this.value); loop();"
-								class="slider" />
+							<label>Margin X-axis</label>
+							<input type="range" min="1" max="200" value="20" oninput="xaxis=float(this.value); loop();" class="slider" />
 						</div>
 						<div class="column">
-							<label>Margin Y-axix</label>
-							<input type="range" min="1" max="200" value="20" oninput="yaxis=float(this.value); loop();"
-								class="slider" />
+							<label>Margin Y-axis</label>
+							<input type="range" min="1" max="200" value="20" oninput="yaxis=float(this.value); loop();" class="slider" />
 						</div>
 						<div class="column">
 							<label>Font Size</label>
-							<input type="range" min="0.05" max="5" value="1" step="0.1"
-								oninput="fontsize=float(this.value); loop();" class="slider" />
+							<input type="range" min="0.05" max="5" value="1" step="0.1" oninput="fontsize=float(this.value); loop();" class="slider" />
 						</div>
 						<div class="column">
 							<label>Width</label>
-							<input type="range" min="100" max="800" value="700" oninput="w=float(this.value); loop();"
-								class="slider" />
+							<input type="range" min="100" max="800" value="700" oninput="w=float(this.value); loop();" class="slider" />
 						</div>
 						<div class="column">
 							<label>Line Gap</label>
-							<input type="range" min="50" max="150" value="60"
-								oninput="linespacing=float(this.value); loop();" class="slider" />
+							<input type="range" min="50" max="150" value="60" oninput="linespacing=float(this.value); loop();" class="slider" />
 						</div>
 					</div>
 				</form>
 			</section>
 		</div>
 		
-		<div class="column">
-			<div id="contributing"></div>
+		<div class="column" style="padding: 20px; display: flex; justify-content: center;">
+			<div id="contributing" style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.3); background-color: white;"></div>
 		</div>
 	</div>
 	</main>
