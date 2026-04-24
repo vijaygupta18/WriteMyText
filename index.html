@@ -1,173 +1,264 @@
-<!-- 
-<?php
-
-// i used the php extension to run the static page on herko// used irrelevant php just to avoid the hack extension
-
-$siteOwnersEmail = 'vijayrauniyar1818@gmail.com';
-
-if($_POST) {
-
-   $name = trim(stripslashes($_POST['Name']));
-
-   $email = trim(stripslashes($_POST['Email']));
-
-   $subject = trim(stripslashes($_POST['Subject']));
-
-   $contact_message = trim(stripslashes($_POST['Message']));
-
-   // Check Name
-
-	if (strlen($name) < 2) {		$error['name'] = "Please enter your name.";
-
-	}
-
-	// Check Email
-
-	if (!preg_match('/^[a-z0-9&\'\.\-_\+]+@[a-z0-9\-]+\.([a-z0-9\-]+\.)*+[a-z]{2}/is', $email)) {
-
-		$error['email'] = "Please enter a valid email address.";
-
-	}
-
-	// Check Message
-
-	if (strlen($contact_message) < 15) {
-
-		$error['message'] = "Please enter your message. It should have at least 15 characters.";
-
-	}
-
-   // Subject
-
-	if ($subject == '') { $subject = "Contact Form Submission"; }
-
-   // Set Message
-
-   $message .= "Email from: " . $name . "<br />";
-
-	$message .= "Email address: " . $email . "<br />";
-
-   $message .= "Message: <br />";
-
-   $message .= $contact_message;
-
-   $message .= "<br /> ----- <br /> This email was sent from your site's contact form. <br />";
-
-   // Set From: header
-
-   $from =  $name . " <" . $email . ">";
-
-   // Email Headers
-
-	$headers = "From: " . $from . "\r\n";
-
-	$headers .= "Reply-To: ". $email . "\r\n";
-
- 	$headers .= "MIME-Version: 1.0\r\n";
-
-	$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-   if (!$error) {
-
-      ini_set("sendmail_from", $siteOwnersEmail); // for windows server
-
-      $mail = mail($siteOwnersEmail, $subject, $message, $headers);
-
-		if ($mail) { echo "OK"; }
-
-      else { echo "Something went wrong. Please try again."; }
-
-		
-
-	} # end if - no validation error
-
-	else {
-
-		$response = (isset($error['name'])) ? $error['name'] . "<br /> \n" : null;
-
-		$response .= (isset($error['email'])) ? $error['email'] . "<br /> \n" : null;
-
-		$response .= (isset($error['message'])) ? $error['message'] . "<br />" : null;
-
-		
-
-		echo $response;
-
-	} 
-
-}
-
-?> -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<title>Write-My-Text</title>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.css" />
-	<link rel="stylesheet" href="https://milligram.io/styles/main.css" />
-	<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Write My Text — handwriting on paper · Vijay Gupta</title>
+  <meta name="description" content="Turn your typed text into handwritten notes on a paper page. Pick a handwriting style, adjust margins and size, download as an image. Free, private, no uploads.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-	<div class="row" style="max-width: 99vw; padding: 20px;">
-		<div class="column" style="padding: 20px; background-color: rgba(255,255,255,0.1); border-radius: 10px;">
-			<section class="container" id="examples">
-				<h3 id="title"><u>Write My Text</u></h3>
-				<p style="text-align: center; color: white; margin-bottom: 20px;">Enter your text below and customize its appearance.</p>
-				<form onsubmit="return false">
-					<fieldset>
-						<textarea placeholder="Your text here..." id="dataField" onkeyup="textChanged(this.value)" style="background-color: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3);"></textarea>
-					</fieldset>
-				
-					<div class="row" style="margin-top: 20px; justify-content: center;">
-						<div class="column column-40" style="text-align: center;">
-							<a href="#" class="rainbow-button" id="b1" onclick="incrementor()" alt="Change Handwriting"></a>
-						</div>
-						<div class="column column-40" style="text-align: center;">
-							<a href="#" class="rainbow-button" id="b2" onclick="save(str(pageNum++))" alt="Download Page"></a>
-						</div>
-					</div>
-					<br>
-					<h5 style="color: white; text-align: center; margin-top: 30px;">Customize Layout</h5>
-					<div class="row" style="margin-top: 10px;">
-						<div class="column">
-							<label>Margin X-axis</label>
-							<input type="range" min="1" max="200" value="20" oninput="xaxis=float(this.value); loop();" class="slider" />
-						</div>
-						<div class="column">
-							<label>Margin Y-axis</label>
-							<input type="range" min="1" max="200" value="20" oninput="yaxis=float(this.value); loop();" class="slider" />
-						</div>
-						<div class="column">
-							<label>Font Size</label>
-							<input type="range" min="0.05" max="5" value="1" step="0.1" oninput="fontsize=float(this.value); loop();" class="slider" />
-						</div>
-						<div class="column">
-							<label>Width</label>
-							<input type="range" min="100" max="800" value="700" oninput="w=float(this.value); loop();" class="slider" />
-						</div>
-						<div class="column">
-							<label>Line Gap</label>
-							<input type="range" min="50" max="150" value="60" oninput="linespacing=float(this.value); loop();" class="slider" />
-						</div>
-					</div>
-				</form>
-			</section>
-		</div>
-		
-		<div class="column" style="padding: 20px; display: flex; justify-content: center;">
-			<div id="contributing" style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.3); background-color: white;"></div>
-		</div>
-	</div>
-	</main>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
-	<script src="script.js"></script>
+  <!-- ===== Site Nav ===== -->
+  <header class="site-nav" role="banner">
+    <div class="nav-inner">
+      <a href="#" class="brand" aria-label="Vijay Gupta — tools">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden>
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+        <span class="brand-name">vijay<span class="brand-dot">.</span>tools</span>
+      </a>
+      <nav class="nav-meta" aria-label="Site meta">
+        <span class="nav-breadcrumb">
+          <span>Tools</span><span class="slash">/</span><span class="current">Write My Text</span>
+        </span>
+        <a href="https://github.com/vijaygupta18" class="nav-link" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.4.9.1-.8.4-1.2.7-1.5-2.5-.3-5.2-1.3-5.2-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.5-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.5C20.2 21.4 23.5 17 23.5 12 23.5 5.6 18.4.5 12 .5z"/>
+          </svg>
+          GitHub
+        </a>
+        <button type="button" class="nav-link nav-link-accent" data-open="support" aria-label="Buy me a coffee">
+          <svg width="14" height="14" viewBox="2 7 20 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+            <path d="M17 8h1a4 4 0 0 1 0 8h-1"/>
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/>
+          </svg>
+          <span class="nav-link-label">Buy me a chai</span>
+        </button>
+      </nav>
+    </div>
+  </header>
 
+  <main class="workbench">
+
+    <!-- ===== Left Panel: Controls ===== -->
+    <aside class="panel-controls" aria-label="Controls">
+
+      <div class="panel-section">
+        <h1 class="tool-title">Write My Text</h1>
+        <p class="tool-sub">Type below. Your text appears in handwriting on a paper page.</p>
+      </div>
+
+      <div class="panel-section">
+        <label class="field-label" for="dataField">Your text</label>
+        <textarea
+          id="dataField"
+          class="text-input"
+          placeholder="Start writing here..."
+          rows="7"
+          oninput="textChanged(this.value)"
+          spellcheck="true"
+        ></textarea>
+      </div>
+
+      <div class="panel-section">
+        <div class="style-row">
+          <div class="style-info">
+            <span class="field-label">Handwriting style</span>
+            <span class="style-badge" id="styleBadge">Style 3</span>
+          </div>
+          <button type="button" class="btn-cycle" id="b1" onclick="incrementor()" aria-label="Change handwriting style">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+              <polyline points="23 4 23 10 17 10"/>
+              <path d="M20.5 14.5A9 9 0 1 1 19 7l4 3"/>
+            </svg>
+            Switch style
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <h2 class="section-heading">Layout</h2>
+
+        <div class="slider-grid">
+          <div class="slider-row">
+            <label class="slider-label" for="sliderX">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+              Margin X
+            </label>
+            <span class="slider-val" id="valX">20</span>
+            <input type="range" id="sliderX" min="1" max="200" value="20"
+              oninput="xaxis=float(this.value); document.getElementById('valX').textContent=this.value; loop();" />
+          </div>
+
+          <div class="slider-row">
+            <label class="slider-label" for="sliderY">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden>
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <polyline points="5 12 12 19 19 12"/>
+              </svg>
+              Margin Y
+            </label>
+            <span class="slider-val" id="valY">20</span>
+            <input type="range" id="sliderY" min="1" max="200" value="20"
+              oninput="yaxis=float(this.value); document.getElementById('valY').textContent=this.value; loop();" />
+          </div>
+
+          <div class="slider-row">
+            <label class="slider-label" for="sliderSize">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden>
+                <path d="M4 20h4l10.5-10.5a1.5 1.5 0 0 0-4-4L4 16v4z"/>
+              </svg>
+              Font size
+            </label>
+            <span class="slider-val" id="valSize">1.0</span>
+            <input type="range" id="sliderSize" min="0.05" max="5" value="1" step="0.1"
+              oninput="fontsize=float(this.value); document.getElementById('valSize').textContent=parseFloat(this.value).toFixed(1); loop();" />
+          </div>
+
+          <div class="slider-row">
+            <label class="slider-label" for="sliderWidth">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden>
+                <polyline points="3 8 3 3 8 3"/>
+                <polyline points="21 8 21 3 16 3"/>
+                <polyline points="8 21 3 21 3 16"/>
+                <polyline points="16 21 21 21 21 16"/>
+              </svg>
+              Text width
+            </label>
+            <span class="slider-val" id="valWidth">700</span>
+            <input type="range" id="sliderWidth" min="100" max="800" value="700"
+              oninput="w=float(this.value); document.getElementById('valWidth').textContent=this.value; loop();" />
+          </div>
+
+          <div class="slider-row">
+            <label class="slider-label" for="sliderGap">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+              Line gap
+            </label>
+            <span class="slider-val" id="valGap">60</span>
+            <input type="range" id="sliderGap" min="50" max="150" value="60"
+              oninput="linespacing=float(this.value); document.getElementById('valGap').textContent=this.value; loop();" />
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section panel-actions">
+        <button type="button" class="btn-primary" id="b2" onclick="save(str(pageNum++))">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download page
+        </button>
+        <p class="download-hint">Saves the page preview as a PNG image.</p>
+      </div>
+
+    </aside>
+
+    <!-- ===== Right Panel: Preview ===== -->
+    <section class="panel-preview" aria-label="Page preview">
+      <div class="preview-label">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden>
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18"/>
+        </svg>
+        Live preview
+      </div>
+      <div class="page-wrap">
+        <div id="contributing"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Support FAB ===== -->
+  <button id="supportFab" class="support-fab" aria-label="Buy me a coffee" title="Buy me a coffee — support the project">
+    <svg viewBox="0 0 100 100" class="support-fab-arc" aria-hidden="true">
+      <defs>
+        <path id="bmcArc" d="M 16,50 A 34,34 0 0,1 84,50" fill="none"/>
+      </defs>
+      <text class="support-fab-text">
+        <textPath href="#bmcArc" startOffset="50%" text-anchor="middle">BUY ME A COFFEE</textPath>
+      </text>
+    </svg>
+    <svg class="support-fab-icon" viewBox="2 7 20 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M17 8h1a4 4 0 0 1 0 8h-1"/>
+      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/>
+    </svg>
+  </button>
+
+  <!-- ===== Support Dialog ===== -->
+  <div id="supportDialog" class="support-dialog" aria-hidden="true" role="dialog" aria-labelledby="supportTitle">
+    <div class="support-backdrop" data-close></div>
+    <div class="support-panel" role="document">
+      <button class="support-close" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="support-body">
+        <div class="support-badge">
+          <svg viewBox="2 7 20 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M17 8h1a4 4 0 0 1 0 8h-1"/>
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/>
+          </svg>
+        </div>
+
+        <h2 id="supportTitle" class="support-title">Enjoying vijay.tools?</h2>
+        <p class="support-sub">If Write My Text saved you time, a chai keeps these tools free and maintained.</p>
+
+        <div class="support-amounts">
+          <a id="amount49" class="support-amount" href="#">
+            <span class="support-amount-label">Chai</span>
+            <span class="support-amount-value">₹49</span>
+          </a>
+          <a id="amount99" class="support-amount" href="#">
+            <span class="support-amount-label">Coffee</span>
+            <span class="support-amount-value">₹99</span>
+          </a>
+        </div>
+
+        <div class="support-qr-wrap">
+          <p class="support-qr-label">Or scan with any UPI app</p>
+          <div class="support-qr">
+            <img src="https://raw.githubusercontent.com/vijaygupta18/system-design-simulator/main/public/support-upi-qr.jpg" alt="UPI QR code — scan to support Vijay Gupta" loading="lazy"/>
+          </div>
+        </div>
+
+        <button id="supportCopyBtn" class="support-copy" type="button">
+          <span id="supportUpiId">vijaygupta1818@ptyes</span>
+          <svg id="supportCopyIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+
+        <p class="support-hint">Pay what feels right · No pressure · No ads</p>
+
+        <div class="support-foot">
+          <span>Built with</span>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-7 10-7 10z"/></svg>
+          <span>by <strong>Vijay Gupta</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+  <script src="script.js"></script>
 </body>
-
 </html>
